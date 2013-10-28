@@ -62,6 +62,17 @@ static CGRect CGRectVerticallyCenteredInRect(CGRect a, CGRect b)
     };
 }
 
+static CGRect CGRectHorizontallyCenteredInRect(CGRect a, CGRect b)
+{
+    return (CGRect){
+        .origin = {
+            .x = round(CGRectGetMidX(b) - (CGRectGetWidth(a) * 0.5f)),
+            .y = a.origin.y,
+        },
+        .size = a.size,
+    };
+}
+
 
 @implementation UILabel {
     enum {
@@ -314,7 +325,7 @@ static DrawTextInRectMethod* kDefaultImplementationOfDrawTextInRect;
 - (void) drawRect:(CGRect)rect
 {
     if (_renderMode != kRenderModeNone) {
-        if (_flags.overridesDrawTextInRect) {
+        if (_flags.overridesDrawTextInRect || self.shadowColor) {
             CGContextRef c = UIGraphicsGetCurrentContext();
             @try {
                 CGContextSaveGState(c);
@@ -333,6 +344,8 @@ static DrawTextInRectMethod* kDefaultImplementationOfDrawTextInRect;
             CGRect bounds = [self bounds];
             CGRect textRect = [string boundingRectWithSize:bounds.size options:options context:context];
             CGRect centeredTextRect = CGRectVerticallyCenteredInRect(textRect, bounds);
+            if ([self textAlignment] == UITextAlignmentCenter)
+                centeredTextRect = CGRectHorizontallyCenteredInRect(centeredTextRect, bounds);
             [string drawWithRect:centeredTextRect options:options context:context];
         }
     }

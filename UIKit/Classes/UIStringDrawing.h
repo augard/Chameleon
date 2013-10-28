@@ -45,9 +45,9 @@ typedef enum {
 } UILineBreakMode;
 
 typedef enum {
-    UITextAlignmentLeft,
-    UITextAlignmentCenter,
-    UITextAlignmentRight,
+    UITextAlignmentLeft = 0,
+    UITextAlignmentCenter = 2,
+    UITextAlignmentRight = 1,
 } UITextAlignment;
 
 typedef enum {
