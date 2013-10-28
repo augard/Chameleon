@@ -151,12 +151,11 @@ static UIColor *ClearColor = nil;
 
 - (instancetype) initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
-    CGColorRef color = CGColorCreateGenericRGB(red, green, blue, alpha);
+    CGColorRef color = [[NSColor colorWithRed:red green:green blue:blue alpha:alpha] CGColor];
     if (nil == color) {
         return nil;
     }
     self = [self initWithCGColor:color];
-    CGColorRelease(color);
     return self;
 }
 
