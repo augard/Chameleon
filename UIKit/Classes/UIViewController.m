@@ -201,6 +201,7 @@ static NSString* const kUIStoryboardSegueTemplatesKey           = @"UIStoryboard
         [[UINib nibWithNibName:self.nibName bundle:self.nibBundle] instantiateWithOwner:self options:nil];
     } else {
         self.view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,480)];
+        [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     }
 }
 
