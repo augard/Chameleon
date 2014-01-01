@@ -344,8 +344,12 @@ static DrawTextInRectMethod* kDefaultImplementationOfDrawTextInRect;
             CGRect bounds = [self bounds];
             CGRect textRect = [string boundingRectWithSize:bounds.size options:options context:context];
             CGRect centeredTextRect = CGRectVerticallyCenteredInRect(textRect, bounds);
-            if ([self textAlignment] == UITextAlignmentCenter)
-                centeredTextRect = CGRectHorizontallyCenteredInRect(centeredTextRect, bounds);
+            if ([self attributedText] == nil) {
+                if (_textAlignment == UITextAlignmentCenter)
+                    centeredTextRect = CGRectHorizontallyCenteredInRect(centeredTextRect, bounds);
+                else if (_textAlignment == UITextAlignmentRight)
+                    centeredTextRect.origin.x = bounds.size.width - centeredTextRect.size.width;
+            }
             [string drawWithRect:centeredTextRect options:options context:context];
         }
     }
