@@ -200,7 +200,7 @@ static NSString* const kUIStoryboardSegueTemplatesKey           = @"UIStoryboard
     } else if (self.nibName) {
         [[UINib nibWithNibName:self.nibName bundle:self.nibBundle] instantiateWithOwner:self options:nil];
     } else {
-        self.view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,480)];
+        self.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds]; // it's better to use bigger frame then 320
         [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     }
 }
