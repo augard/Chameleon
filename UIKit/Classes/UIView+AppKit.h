@@ -6,10 +6,15 @@
 @end
 
 
+@class NSView;
+
 @interface UIView (AppKitIntegration)
 - (void) setNextKeyView:(UIView*)view;
 - (UIView*) nextKeyView;
 - (UIView*) previousKeyView;
 - (UIView*) nextValidKeyView;
 - (UIView*) previousValidKeyView;
+
+- (void) addSubNSView:(NSView *)view;
+
 @end

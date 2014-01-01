@@ -1,5 +1,15 @@
 #import "UIView+AppKit.h"
 #import "UIView+UIPrivate.h"
+#import "UIViewAdapter.h"
+
+
+@interface NSView : NSObject
+
+@property (nonatomic, assign) CGRect frame;
+@property (nonatomic) UIViewAutoresizing autoresizingMask;
+
+@end
+
 
 @implementation UIView (AppKitIntegration)
 
@@ -40,6 +50,15 @@
         prev = [prev previousKeyView];
     }
     return prev;
+}
+
+- (void) addSubNSView:(NSView *)view
+{
+    UIViewAdapter *adapterView = [[UIViewAdapter alloc] initWithFrame:[view frame]];
+    [adapterView setAutoresizingMask:view.autoresizingMask];
+    [adapterView setNSView:view];
+    [view setFrame:adapterView.bounds];
+    [self addSubview:adapterView];
 }
 
 @end
