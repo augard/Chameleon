@@ -15,6 +15,6 @@
 - (UIView*) nextValidKeyView;
 - (UIView*) previousValidKeyView;
 
-- (void) addSubNSView:(NSView *)view;
+- (UIView*) addSubNSView:(NSView *)view;
 
 @end

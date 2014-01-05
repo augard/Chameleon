@@ -52,13 +52,14 @@
     return prev;
 }
 
-- (void) addSubNSView:(NSView *)view
+- (UIView*) addSubNSView:(NSView *)view
 {
     UIViewAdapter *adapterView = [[UIViewAdapter alloc] initWithFrame:[view frame]];
     [adapterView setAutoresizingMask:view.autoresizingMask];
     [adapterView setNSView:view];
     [view setFrame:adapterView.bounds];
     [self addSubview:adapterView];
+    return adapterView;
 }
 
 @end
