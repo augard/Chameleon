@@ -59,6 +59,7 @@ static NSString* const kUIStyleKey = @"UIStyle";
 @implementation UITableView {
     NSMutableDictionary* _cachedCells;
     NSMutableSet* _reusableCells;
+    NSMutableDictionary *_registredCells;
     NSMutableArray* _sections;
     NSMutableArray* _selectedRows;
     
@@ -132,15 +133,24 @@ static NSString* const kUIStyleKey = @"UIStyle";
 
 - (void) registerClass:(Class)cellClass forCellReuseIdentifier:(NSString*)identifier
 {
-#warning stub
-    [self doesNotRecognizeSelector:_cmd];
+    _registredCells[identifier] = cellClass;
 }
 
 - (id) dequeueReusableCellWithIdentifier:(NSString*)identifier forIndexPath:(NSIndexPath*)indexPath
 {
-#warning stub
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
+    for (UITableViewCell* cell in _reusableCells) {
+        if ([cell.reuseIdentifier isEqualToString:identifier]) {
+            [_reusableCells removeObject:cell];
+            [cell prepareForReuse];
+            [cell setNeedsLayout];
+            return cell;
+        }
+    }
+    if (_registredCells[identifier] == nil)
+        return nil;
+    UITableViewCell *cell = [[_registredCells[identifier] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    [cell setNeedsLayout];
+    return cell;
 }
 
 - (UITableViewCell*) dequeueReusableCellWithIdentifier:(NSString*)identifier
@@ -708,6 +718,7 @@ static NSString* const kUIStyleKey = @"UIStyle";
     _cachedCells = [[NSMutableDictionary alloc] init];
     _sections = [[NSMutableArray alloc] init];
     _reusableCells = [[NSMutableSet alloc] init];
+    _registredCells = [[NSMutableDictionary alloc] init];
     _selectedRows = [[NSMutableArray alloc] init];
     
     self.separatorColor = [UIColor colorWithRed:.88f green:.88f blue:.88f alpha:1];
