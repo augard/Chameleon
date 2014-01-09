@@ -57,6 +57,7 @@
     UIViewAdapter *adapterView = [[UIViewAdapter alloc] initWithFrame:[view frame]];
     [adapterView setAutoresizingMask:view.autoresizingMask];
     [adapterView setNSView:view];
+    [adapterView setScrollEnabled:NO];
     [view setFrame:adapterView.bounds];
     [self addSubview:adapterView];
     return adapterView;
