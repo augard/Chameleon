@@ -604,7 +604,7 @@ static NSString* const kUIStyleKey = @"UIStyle";
     CGPoint location = [touch locationInView:self];
     NSIndexPath* touchedRow = [self indexPathForRowAtPoint:location];
     
-    if (touchedRow) {
+    if (touchedRow && self.allowsSelection) {
         BOOL commandKeyDown = ([NSEvent modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask;
         BOOL exclusively = !commandKeyDown;
         if (([NSEvent modifierFlags] & NSShiftKeyMask) == NSShiftKeyMask && [_selectedRows count]) {
